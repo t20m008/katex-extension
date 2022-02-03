@@ -1,5 +1,5 @@
 {
-    "name": "KaTeX extenstion",
+    "name": "KaTeX Extenstions",
     "version": "1.0",
     "manifest_version": 3,
     "description": "Webページ上のKaTeX数式に折りたたみ/展開機能やコンテキストメニューを追加する",

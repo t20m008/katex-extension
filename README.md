@@ -1,1 +1,1 @@
-# katex-extension
+# katex-extensions
