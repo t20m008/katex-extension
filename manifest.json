@@ -23,5 +23,8 @@
     "browser_action": {
         "default_icon": "image/icon_128.png"
     },
-    "web_accessible_resources" :["content-script/*"]
+    "web_accessible_resources" :[{
+        "resources": ["content-script/*"],
+        "matches": ["<all_urls>"]
+    }]
 }
