@@ -1,6 +1,6 @@
 {
     "name": "KaTeX Extenstions",
-    "version": "1.0",
+    "version": "1.1",
     "manifest_version": 3,
     "description": "Webページ上のKaTeX数式に折りたたみ/展開機能やコンテキストメニューを追加する",
     "icons": {
@@ -20,7 +20,7 @@
         "all_frames": true
         }
     ],
-    "browser_action": {
+    "action": {
         "default_icon": "image/icon_128.png"
     },
     "web_accessible_resources" :[{

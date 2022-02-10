@@ -1,1 +1,1393 @@
-const window_width=window.innerWidth-15,window_width_adjusted=window_width;let katex=[],katex_list=[],katex_html_collection_list=[],mathml_list=[],katex_mathml_html_collection_list=[],katexClass=[],katexHTMLClass=[],katexMathMLClass=[];async function getKatex(){katex=await document.getElementsByClassName("katex"),katex=Array.from(katex),katex_html_collection_list=await document.getElementsByClassName("katex-html"),katex_list=Array.from(katex_html_collection_list),katex_mathml_html_collection_list=await document.getElementsByClassName("katex-mathml"),mathml_list=Array.from(katex_mathml_html_collection_list)}async function loadKaTeX(){katexClass=await document.getElementsByClassName("katex"),katexClass=Array.from(katexClass),katexHTMLClass=await document.getElementsByClassName("katex-html"),katexHTMLClass=Array.from(katexHTMLClass),katexMathMLClass=await document.getElementsByClassName("katex-mathml"),katexMathMLClass=Array.from(katexMathMLClass)}const addOrdinalNumberClass=async()=>{katex.forEach((e,t)=>{if(katex[t].children[1].children.length>0){"katex-display"===katex[t].parentElement.classList[0]&&katex[t].parentElement.classList.add(`kd-${t}`),katex[t].classList.add(`k-${t}`);const e=Array.from(katex[t].children);e.forEach((a,s)=>{"katex-mathml"===a.className?e[s].classList.add(`km-${t}`):"katex-html"===a.className&&e[s].classList.add(`kh-${t}`)})}})},addStyle=async()=>{},addClassHorizontal=async()=>{let e=0,t=0,a=0,s=!0,l=0,n=!1,o=0;katex_list.forEach((c,r)=>{const i=Array.from(c.children);e=0,t=0,a=0,i.forEach(s=>{"base"===s.className&&e++,Array.from(s.children).forEach(e=>{"="===e.textContent&&t++,"⇒"===e.textContent&&a++})}),e>2&&(t>1||a>1)&&(c.classList.add("horizontal"),l=0,o=0,s=!0,i.forEach((e,t)=>{Array.from(e.children).forEach((e,r)=>{0===a?(c.classList.add("equation"),s?"="===e.textContent&&(s=!1,l=t):"="===e.textContent?(n=!1,o=t):n=!0):a>0&&c.classList.add("logical")})}),0!==o&&i.forEach((e,t)=>{if(t<l)e.classList.add("leftmost");else if(t==l)e.classList.add("leftmost","phrase_end");else if(t>l&&t<=o){Array.from(e.children).forEach((t,a)=>{"="===t.textContent&&e.classList.add("phrase_end")})}else o<t&&e.classList.add("rightmost")}))})},addClassVertical=async()=>{katexHTMLClass.forEach((e,t)=>{if(Array.from(e.getElementsByClassName("mtable")).forEach((e,t)=>{}),void 0===e.getElementsByClassName("mtable")[0]);else{const a=Array.from(e.getElementsByClassName("mtable"));let s=!1,l=!1,n=!1;a.forEach((a,o)=>{if(a.classList.contains("matrix-mtable"));else if(!a.classList.contains("matrix-mtable")&&0===o){const o=Array.from(a.children);if(o.forEach(e=>{"col-align-r"===e.className&&(l=!0),"col-align-l"===e.className&&(n=!0)}),!0===l&&!0===n&&(s=!0),s){e.classList.add("multi-line");const a=[],s=[],l=[];o.forEach(e=>{"col-align-r"===e.className?a.push(e):"col-align-l"===e.className&&s.push(e)});let n=0,c=0;3===a.length&&2===s.length?(a.length>1&&s.length>1&&(a.forEach((e,a)=>{n=0;const s=Array.from(e.getElementsByClassName("mord"));0===a?s.forEach((e,a)=>{e.textContent.length>0&&"mord"===e.className&&e.clientHeight>1&&e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")&&(l.push(e.parentElement.style.top),e.classList.add(`formula-${t}`,`row-${n}`,"left"),n++)}):s.forEach((e,a)=>{e.textContent.length>0&&"mord"===e.className&&e.clientHeight>1&&e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")&&(e.classList.add(`formula-${t}`,`row-${l.indexOf(e.parentElement.style.top)}`,"right"),n++)})}),s.forEach((e,a)=>{c=0,Array.from(e.getElementsByClassName("mord")).forEach((e,a)=>{e.textContent.length>0&&"mord"===e.className&&e.clientHeight>1&&e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")&&(e.classList.add(`formula-${t}`,`row-${l.indexOf(e.parentElement.style.top)}`,"right"),c++)})})),e.classList.add("mcsymmetric")):(a.length>1?a.forEach((e,a)=>{n=0===a?1:0;const s=Array.from(e.getElementsByClassName("mord"));try{s.forEach((e,a)=>{e.textContent.length>0&&"mord"===e.className&&e.clientHeight>1&&e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")&&(e.classList.add(`formula-${t}`,`row-${n}`,"left"),n++)})}catch(e){console.error(e)}}):a.forEach((e,a)=>{Array.from(e.getElementsByClassName("mord")).forEach((e,a)=>{e.textContent.length>0&&"mord"===e.className&&e.clientHeight>1&&e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")&&(e.classList.add(`formula-${t}`,`row-${n}`,"left"),n++)})}),s.length>=1?s.forEach((e,a)=>{const s=Array.from(e.getElementsByClassName("mord"));try{s.forEach((e,a)=>{"⋮"!==e.textContent&&e.textContent.length>0&&"mord"===e.className&&e.clientHeight>1&&e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")?(e.classList.add(`formula-${t}`,`row-${c}`,"right"),c++):"⋮"===e.textContent&&e.classList.add("dots")})}catch(e){console.error(e)}}):s.forEach(e=>{Array.from(e.getElementsByClassName("mord")).forEach((e,a)=>{e.textContent.length>0&&"mord"===e.className&&e.clientHeight>1&&e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")&&e.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("base")&&!e.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains("matrix-mtable")&&(console.log(e),e.classList.add(`formula-${t}`,`row-${c}`,"right"),c++)})}),n===c?e.classList.add("symmetric"):0===n&&c>0?e.classList.add("straight"):e.classList.add("asymmetric"))}}})}})},addStyleOverFlowXAuto=()=>{const e=document.getElementsByClassName("overflow-x");Array.from(e).forEach(e=>{e.style.overflowX="auto",e.style.overflowY="visible",e.style.position="contents"})};function allCollapse(){Array.from(document.getElementsByClassName("katex-extension-button")).forEach((e,t)=>{try{!0===e.classList.contains("collapse-btn")&&e.click()}catch(e){}})}function allExpand(){Array.from(document.getElementsByClassName("katex-extension-button")).forEach((e,t)=>{try{!0===e.classList.contains("expand-btn")&&e.click()}catch(e){}})}const saveKatexStatus=(e,t)=>{const a=JSON.parse(localStorage["katex-status"]);a[window.location.href][e]=t;const s=JSON.stringify(a);localStorage.setItem("katex-status",s)},getKatexOverFlowX=()=>{const e=[],t=document.getElementsByClassName("katex-html"),a=Array.from(t);return a.forEach((t,s)=>{const l=Array.from(t.children);let n=0;l.forEach((e,t)=>{n+=e.offsetWidth}),n>window_width_adjusted&&(a[s].classList.add("overflow-x"),e.push(s))}),e},getPhraseEndList=e=>{const t=[];return e.forEach((e,a)=>{e.classList.contains("phrase_end")&&t.push(a)}),t},getLeftmostList=e=>{const t=[];return e.forEach((e,a)=>{e.classList.contains("leftmost")&&t.push(a)}),t};async function reshape(e){await e.forEach(e=>{const t=Array.from(katex_list[e].children);window.innerWidth;let a=0;const s=[];if(console.log("window.width = ",window.innerWidth,"katex-html-width = ",katex_list[e].clientWidth),t.length>1){console.log(t),t.forEach((t,l)=>{a+=t.clientWidth,console.log("width: ",t.clientWidth," sum: ",a),katex_list[e].clientWidth-50<a&&(a=t.clientWidth,s.push(l))}),console.log("chapter:",s);let l="";const n=[];s.forEach((e,a)=>{if(l="",a<s.length-1){for(let n=e;n<s[a+1];n++)l+=t[n].outerHTML;n.push("<p>"+l+"</p>")}else{for(let a=e;a<t.length;a++)l+=t[a].outerHTML;n.push("<p>"+l+"</p>")}});for(let e=s[0]+1;e<t.length;e++)t[e].remove();const o=n.join("");t[s[0]].outerHTML=o}else t.length})}async function reshape2(e,t=!0){await e.forEach(e=>{const t=Array.from(katex_list[e].children);window.innerWidth;let a=0;const s=[],l=[],n=[];console.log("window.width = ",window.innerWidth,"katex-html-width = ",katex_list[e].scrollWidth);const o=getPhraseEndList(t),c=getLeftmostList(t);katex_list[e].children[c.slice(-1)[0]];if(o.forEach(e=>{t[e+1].children[0].outerHTML=t[e+1].children[0].outerHTML+'<span class="mrel">=</span>',Array.from(t[e].children).slice(-2)[0].remove()}),t.length>1){t.forEach((e,t)=>{l.push(e.offsetWidth),n.push(e.offsetHeight),a+=e.clientWidth,window_width_adjusted<=a&&(a=e.clientWidth,s.push(t))}),console.log(t),s.forEach((e,a)=>{if(console.log("chapter: ",e),e!=s.slice(-1)[0]){console.log("chapterの最後の要素ではない");for(let l=e;l<s[a+1];l++)if(console.log("i=",l),l==e&&t[l].classList.contains("phrase_end")&&t[l-1].classList.contains("phrase_end")){console.log("@@@if@@@");const e=document.createElement("br");e.className=`${l}`,t[l].before(e)}else if(l==e&&t[l].classList.contains("phrase_end")&&!t[l-1].classList.contains("phrase_end")){console.log("@@@elif1@@@");const e=document.createElement("br");e.className=`${l}`,t[o[o.indexOf(l)-1]].after(e)}else if(l!=e||t[l].classList.contains("phrase_end")){console.log("@@@else@@@"),document.createElement("br").className=`${l}`}else{let a;console.log("@@@elif2@@@:chapter",e),console.log(getPhraseEndList(t)),getPhraseEndList(t).forEach(e=>{console.log(l,e),e<l&&(a=e)}),console.log("tmp",a);const s=document.createElement("br");s.className=`${l}`,console.log([a,t]),t[a+1].before(s)}}else{console.log("chapterの最後の要素");for(let a=e;a<t.length;a++)if(console.log("i=",a),a==e&&t[a].classList.contains("phrase_end")){console.log("+++if+++");const e=document.createElement("br");e.className=`${a}`,t[o[o.indexOf(a)-1]].after(e)}else if(a==e){let e;console.log("+++elif+++"),getPhraseEndList(t).forEach(t=>{t<a&&(e=t)}),console.log("tmp",e);const s=document.createElement("br");s.className=`${a}`,t[e+1].before(s)}}}),console.log("chapters: ",s),console.log("phrase_end: ",getPhraseEndList(t))}else t.length})}function sumFront(e,t){let a=0;for(let s=0;s<t;s++)a+=e[s]}function sumPart(e,t,a){let s=0;for(let l=t;l<a;l++)s+=e[l]}function collapseAsymmetric(e){const t=document.querySelectorAll(`[class~="formula-${e}"`);let a=0,s=0;const l=[],n=[],o=[],c=[];let r=null,i=null,m=null;if(katex_list[e].classList.contains("collapsed"));else if(t.forEach((e,t)=>{e.classList.contains("left")?(a++,l.push(e.clientHeight),o.push(e)):(s++,n.push(e.clientHeight),c.push(e)),a=0,s=0}),o.forEach((e,t)=>{0==t&&(r=e),t<o.length-1&&e.classList.add("gradation")}),c.forEach((e,t)=>{t<c.length-1?(e.classList.add("gradation"),e.style.display="none",e.previousElementSibling.style.display="none"):m=e}),i=c[1],null!=r&&null!=m){const t=m.parentElement.style.top;i.parentElement.style.top;m.parentElement.style.top=r.parentElement.style.top;const a=Math.max(r.clientHeight,m.clientHeight);katex_list[e].style.height=`${a}px`,katex_list[e].classList.add("collapsed",`${t}`),katex_list[e].classList.remove("expanded")}}function collapseHorizontal(e){let t=0,a=0,s=0;const l=Array.from(katex_list[e].children);l.forEach((e,l)=>{e.classList.contains("leftmost")?t=l:e.classList.contains("rightmost")&&(a=l,s++)}),a=a-s+1,l.forEach((e,s)=>{t<s&&s<a&&(e.style.display="none",e.classList.add("gradation"))}),katex_list[e].classList.remove("expanded"),katex_list[e].classList.add("collapsed")}function collapseHorizontalOnMounted(e){let t=0,a=0,s=0;const l=Array.from(katex_list[e].children);l.forEach((e,l)=>{e.classList.contains("leftmost")?t=l:e.classList.contains("rightmost")&&(a=l,s++)}),a=a-s+1,l.forEach((e,s)=>{t<s&&s<a&&(e.style.display="none",e.classList.add("gradation"))}),katex_list[e].classList.add("collapsed")}function collapseMultiColumnsSymmetric(e){const t=document.querySelectorAll(`[class~="formula-${e}"`),a=Array.from(katex_list[e].getElementsByClassName("left")),s=[],l=a.length;a.forEach((e,t)=>{s.push(e.parentElement.style.top)}),katex_list[e].classList.add(`${s.slice(-1)[0]}`),t.forEach((e,t)=>{const a=e.className.match(/row-(\d)/)[1];a>0&&a<l-1?(e.style.display="none",e.classList.add("gradation")):a==l-1&&(e.parentElement.style.top=s[1])}),katex_list[e].classList.add("collapsed"),katex_list[e].classList.remove("expanded")}function expandMultiColumnsSymmetric(e){const t=document.querySelectorAll(`[class~="formula-${e}"`),a=Array.from(katex_list[e].getElementsByClassName("left")),s=[],l=a.length;let n=0;a.forEach((e,t)=>{s.push(e.parentElement.style.top)}),t.forEach((t,a)=>{const s=t.className.match(/row-(\d)/)[1];s>0&&s<l-1?t.style.display="":s==l-1&&(Array.from(katex_list[e].classList).forEach((e,t)=>{e.match(/\w+em/g)&&(n=e)}),t.parentElement.style.top=n)}),katex_list[e].classList.add("expanded"),katex_list[e].classList.remove("collapsed")}function collapseStraight(e){document.getElementsByClassName("katex-html");const t=document.querySelectorAll(`[class~="formula-${e}"`);t.forEach((e,a)=>{a>0&&a<t.length-1&&(e.style.display="none")})}function collapseSymmetric(e){Array.from(document.getElementsByClassName("dots")).forEach((e,t)=>{e.classList.add("gradation"),e.style.display="none"});const t=document.querySelectorAll(`[class~="formula-${e}"`),a=[],s=[],l=[],n=[],o=[],c=[],r=[],i=[];let m=0;t.forEach((e,t)=>{e.classList.contains("left")?(a.push(e.clientHeight),l.push(e)):(m++,s.push(e.clientHeight),n.push(e))});const d=[];l.length!=n.length?d.push(l.slice(0,m-1),l.slice(m-1)):d.push(l),d.forEach((e,t)=>{e.forEach((a,s)=>{s==e.length-1&&c.push(a),t==d.length-1&&0==s&&o.push(a);const l=a.className.match(/row-(\d)/)[1];0!=l&&l!=m-1&&(a.style.display="none",a.previousElementSibling.style.display="none",a.classList.add("gradation"))})}),n.forEach((e,t)=>{}),n.forEach((e,t)=>{0==t?r.push(e):t>0&&t<n.length-1?(e.style.display="none",e.previousElementSibling.style.display="none"):i.push(e)});let h=0,p=0;try{0!=i.length&&(h=i[0].parentElement.style.top,p=o[0].parentElement.nextElementSibling.style.top)}catch(e){console.error(e)}c.forEach(e=>{e.parentElement.style.top=p}),i.forEach(e=>{e.parentElement.style.top=p});let f=0,g=0;o.forEach((e,t)=>{f=0==t?e.clientHeight:Math.max(f,e.clientHeight)}),r.forEach((e,t)=>{f=Math.max(f,e.clientHeight)}),c.forEach((e,t)=>{g=0==t?e.clientHeight:Math.max(g,e.clientHeight)}),i.forEach((e,t)=>{g=Math.max(g,e.clientHeight)}),katex_list[e].style.height=`${f+g}px`,katex_list[e].classList.add("collapsed",`${h}`),katex_list[e].classList.remove("expanded")}function collapseSymmetricOnMounted(e){const t=document.getElementsByClassName("katex-html"),a=document.querySelectorAll(`[class~="formula-${e}"`),s=[],l=[],n=[],o=[],c=[],r=[],i=[],m=[];let d=0;a.forEach((e,t)=>{e.classList.contains("left")?(s.push(e.clientHeight),n.push(e)):(d++,l.push(e.clientHeight),o.push(e))});const h=[];n.length!=o.length?h.push(n.slice(0,d-1),n.slice(d-1)):h.push(n),h.forEach((e,t)=>{e.forEach((a,s)=>{s==e.length-1&&r.push(a),t==h.length-1&&0==s&&c.push(a);const l=a.className.match(/row-(\d)/)[1];0!=l&&l!=d-1&&(a.style.display="none",a.previousElementSibling.style.display="none",a.classList.add("gradation"))})}),o.forEach((e,t)=>{0==t?i.push(e):t>0&&t<o.length-1?(e.style.display="none",e.previousElementSibling.style.display="none",e.classList.add("gradation")):m.push(e)});let p=0,f=0;0!=m.length&&(p=m[0].parentElement.style.top,f=c[0].parentElement.nextElementSibling.style.top),r.forEach(e=>{e.parentElement.style.top=f}),m.forEach(e=>{e.parentElement.style.top=f});let g=0,u=0;c.forEach((e,t)=>{g=0==t?e.clientHeight:Math.max(g,e.clientHeight)}),i.forEach((e,t)=>{g=Math.max(g,e.clientHeight)}),r.forEach((e,t)=>{u=0==t?e.clientHeight:Math.max(u,e.clientHeight)}),m.forEach((e,t)=>{u=Math.max(u,e.clientHeight)}),t[e].style.height=`${g+u}px`,t[e].classList.add("collapsed",`${p}`),t[e].classList.remove("expanded")}function createToggle(e,t,a){const s=document.createElement("div");s.classList.add("switch","katex-toolbar",`kib-${e}`,"py-1");let l="";l=katex_list[e].classList.contains("symmetric")?"symmetric":katex_list[e].classList.contains("asymmetric")?"asymmetric":katex_list[e].classList.contains("horizontal")?"horizontal":katex_list[e].classList.contains("horizontal-combined")?"horizontal-combined":katex_list[e].classList.contains("mcsymmetric")?"mcsymmetric":"none",s.innerHTML=function(e,t,a){let s="checked",l="expand-btn";return t||(s=""),a||(l="collapse-btn"),`<label class="switch__label">\n      <input type="checkbox" ${s} class="switch__input katex-extension-button ${e} ${l}"/>\n      <span class="switch__content"></span><span class="switch__circle"></span></label>`}(l,t,a),katex[e].parentElement.classList.contains("katex-display")?katex[e].parentElement.parentElement.after(s):(s.style.display="inline",s.style.position="relative",katex[e].after(s))}function expandAsymmetric(e){const t=document.getElementsByClassName("katex-html"),a=document.querySelectorAll(`[class~="formula-${e}"`),s=[],l=[];if(t[e].classList.contains("expanded"));else{t[e].style.height="",t[e].classList.remove("collapsed"),t[e].classList.add("expanded");let n="";const o=Array.from(t[e].classList),c=/\w+em/g;o.forEach((a,s)=>{a.match(c)&&(n=t[e].classList[s])}),a.length,a.forEach((e,t)=>{e.style.display="",e.previousElementSibling.style.display="",t==a.length-1&&(e.parentElement.style.top=n),e.classList.contains("left")?s.push(e):l.push(e)})}}function expandHorizontal(e){let t=0,a=0,s=0;Array.from(katex_list[e].children).forEach((e,l)=>{e.classList.contains("leftmost")?t=l:e.classList.contains("rightmost")&&(a=l,s++)}),a=a-s+1,Array.from(katex_list[e].children).forEach((e,s)=>{t<s&&s<a&&(e.style.display="")}),katex_list[e].classList.remove("collapsed"),katex_list[e].classList.add("expanded")}function expandSymmetric(e){Array.from(document.getElementsByClassName("dots")).forEach((e,t)=>{e.style.display=""});const t=document.getElementsByClassName("katex-html"),a=document.querySelectorAll(`[class~="formula-${e}"`);if(t[e].classList.contains("expanded"));else{t[e].style.height="",t[e].classList.remove("collapsed"),t[e].classList.add("expanded");let s="";Array.from(t[e].classList).forEach((a,l)=>{a.match(/\w+em/g)&&(s=t[e].classList[l])});const l=[];a.forEach(e=>{l.push(e.className.match(/row-(\d)/)[1])});const n=Math.max(...l);a.forEach((e,t)=>{e.style.display="",e.previousElementSibling.style.display="",e.className.match(/row-(\d)/)[1]==n&&(e.parentElement.style.top=s)})}}function fireStoreDocExists(){firebase.auth().currentUser&&firebase.firestore().collection(CollectionName).doc(firebase.auth().currentUser.uid).get().then(e=>{})}function fireStoreSaveDocField(){firebase.auth().currentUser&&firebase.firestore().collection(CollectionName).doc(firebase.auth().currentUser.uid).set({displayName:firebase.auth().currentUser.displayName,email:firebase.auth().currentUser.email,uid:firebase.auth().currentUser.uid}).then(()=>{})}function fireStoreSaveLog(e,t){const a=Array.from(document.getElementsByClassName("katex-mathml"));firebase.firestore().collection(CollectionName).doc(firebase.auth().currentUser.uid).collection("history").doc(getUniqueStr(811)).set({action:t,locale:(new Date).toLocaleString(),href:window.location.href,id:e,tex:a[e].innerText,timestamp:Date.now()}).then(()=>{})}function fireStoreSaveLogAll(e,t){const a=Array.from(document.getElementsByClassName("katex-mathml"));firebase.firestore().collection(CollectionAll).doc(getUniqueStr(999)).set({displayName:firebase.auth().currentUser.displayName,email:firebase.auth().currentUser.email,uid:firebase.auth().currentUser.uid,action:t,locale:(new Date).toLocaleString(),href:window.location.href,id:e,tex:a[e].innerText,timestamp:Date.now()}).then(()=>{})}function getUniqueStr(e){let t=1e3;return e&&(t=e),(new Date).getTime().toString(16)+Math.floor(t*Math.random()).toString(16)}async function setToggleDetail(e,t,a,s){"symmetric"==a?e.addEventListener("change",a=>{e.checked?(a.target.classList.remove("collapse-btn"),a.target.classList.add("expand-btn"),a.target.classList.remove(`scbtn-${t}`),a.target.classList.add(`sebtn-${t}`),collapseSymmetric(t),saveKatexStatus(t,1)):(a.target.classList.remove("expand-btn"),a.target.classList.add("collapse-btn"),a.target.classList.remove(`sebtn-${t}`),a.target.classList.add(`scbtn-${t}`),expandSymmetric(t),saveKatexStatus(t,0))}):"asymmetric"==a?e.addEventListener("change",a=>{e.checked?(a.target.classList.remove("collapse-btn"),a.target.classList.add("expand-btn"),a.target.classList.remove(`acbtn-${t}`),a.target.classList.add(`aebtn-${t}`),collapseAsymmetric(t),saveKatexStatus(t,1)):(a.target.classList.remove("expand-btn"),a.target.classList.add("collapse-btn"),a.target.classList.remove(`aebtn-${t}`),a.target.classList.add(`acbtn-${t}`),expandAsymmetric(t),saveKatexStatus(t,0))}):"mcsymmetric"==a?e.addEventListener("change",a=>{e.checked?(a.target.classList.remove("collapse-btn"),a.target.classList.add("expand-btn"),a.target.classList.remove(`mcbtn-${t}`),a.target.classList.add(`mebtn-${t}`),collapseMultiColumnsSymmetric(t),saveKatexStatus(t,1)):(a.target.classList.remove("expand-btn"),a.target.classList.add("collapse-btn"),a.target.classList.remove(`mebtn-${t}`),a.target.classList.add(`mcbtn-${t}`),expandMultiColumnsSymmetric(t),saveKatexStatus(t,0))}):"horizontal"==a&&e.addEventListener("change",a=>{e.checked?(a.target.classList.remove("collapse-btn"),a.target.classList.add("expand-btn"),a.target.classList.remove(`hcbtn-${t}`),a.target.classList.add(`hebtn-${t}`),collapseHorizontal(t),saveKatexStatus(t,1)):(a.target.classList.remove("expand-btn"),a.target.classList.add("collapse-btn"),a.target.classList.remove(`hebtn-${t}`),a.target.classList.add(`hcbtn-${t}`),expandHorizontal(t),saveKatexStatus(t,0))})}async function katexCollapsible(e=!0,t=!0,a){await getKatex(),await loadKaTeX(),await addOrdinalNumberClass(),await addClassHorizontal(),await addClassVertical(),await addStyle();getKatexOverFlowX();addStyleOverFlowXAuto(),e&&katexHTMLClass.forEach((e,t)=>{katexClass[t].parentElement.classList.contains("katex-display")?katexHTMLClass[t].classList.add("display"):katexHTMLClass[t].classList.add("inline"),e.classList.contains("symmetric")?1==a[t]?(collapseSymmetric(t),createToggle(t,1,!0)):createToggle(t,0,!1):e.classList.contains("straight")?collapseStraight(t):e.classList.contains("asymmetric")?1==a[t]?(collapseAsymmetric(t),createToggle(t,1,!0)):createToggle(t,0,!1):e.classList.contains("mcsymmetric")?1==a[t]?(collapseMultiColumnsSymmetric(t),createToggle(t,1,!0)):createToggle(t,0,!1):e.classList.contains("horizontal")?1==a[t]?(collapseHorizontal(t),createToggle(t,1,!0)):createToggle(t,0,!1):e.classList.contains("horizontal-combined")});const s=Array.from(document.getElementsByClassName("katex-extension-button"));let l=null;s.forEach((e,t)=>{l=e.classList[2],setToggleDetail(e,e.parentElement.parentElement.classList[2].split("-")[1],l)})}export default(e,t)=>{t("katexCollapsible",katexCollapsible),t("add",addClassVertical)};export{allCollapse,allExpand,getUniqueStr,CollectionName,CollectionAll};
+/* eslint-disable prefer-const */
+/* eslint-disable require-await */
+/* eslint-disable no-console */
+/* eslint-disable camelcase */
+/* eslint-disable no-empty */
+/* eslint-disable eqeqeq */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+
+// import { getDefaultSetting } from './katex-localStorage'
+const CollectionAll = "a";
+const CollectionName = "n";
+const window_width = window.innerWidth - 15;
+const window_width_adjusted = window_width;
+// list of .katex-html
+let katex = [];
+let katex_list = [];
+let katex_html_collection_list = [];
+let mathml_list = [];
+let katex_mathml_html_collection_list = [];
+
+// list of .katex-html
+let katexClass = [];
+let katexHTMLClass = [];
+let katexMathMLClass = [];
+
+async function getKatex() {
+  katex = await document.getElementsByClassName("katex");
+  katex = Array.from(katex);
+  katex_html_collection_list = await document.getElementsByClassName("katex-html");
+  katex_list = Array.from(katex_html_collection_list);
+  katex_mathml_html_collection_list = await document.getElementsByClassName("katex-mathml");
+  mathml_list = Array.from(katex_mathml_html_collection_list);
+}
+
+async function loadKaTeX() {
+  katexClass = await document.getElementsByClassName("katex");
+  katexClass = Array.from(katexClass);
+  katexHTMLClass = await document.getElementsByClassName("katex-html");
+  katexHTMLClass = Array.from(katexHTMLClass);
+  katexMathMLClass = await document.getElementsByClassName("katex-mathml");
+  katexMathMLClass = Array.from(katexMathMLClass);
+}
+
+const addOrdinalNumberClass = async () => {
+  // const katexHTMLCollectionList = document.getElementsByClassName('katex')
+  // const katexList = Array.from(document.getElementsByClassName('katex'))
+
+  katex.forEach((ktx, index) => {
+    if (katex[index].children[1].children.length > 0) {
+      if (katex[index].parentElement.classList[0] === "katex-display") {
+        katex[index].parentElement.classList.add(`kd-${index}`);
+      }
+      katex[index].classList.add(`k-${index}`);
+      const children = Array.from(katex[index].children);
+      children.forEach((child, childIndex) => {
+        if (child.className === "katex-mathml") {
+          children[childIndex].classList.add(`km-${index}`);
+        } else if (child.className === "katex-html") {
+          children[childIndex].classList.add(`kh-${index}`);
+        }
+      });
+    }
+  });
+};
+
+const addStyle = async () => {
+  // katex_list.forEach((katex) => {
+  //   katex.style.overflow = 'auto revert'
+  // })
+};
+
+const addClassHorizontal = async () => {
+  let baseClassCount = 0;
+  let mrelEqCount = 0;
+  let mrelRightArrowCount = 0;
+  let leftmost = true;
+  let leftmostLastBaseIndex = 0;
+  let rightmost = false;
+  let rightmostFirstBaseIndex = 0;
+  katex_list.forEach((katex_html, katex_html_index) => {
+    const bases = Array.from(katex_html.children);
+
+    baseClassCount = 0;
+    mrelEqCount = 0;
+    mrelRightArrowCount = 0;
+
+    bases.forEach(base => {
+      if (base.className === "base") baseClassCount++;
+      const base_children = Array.from(base.children);
+      base_children.forEach(baseChild => {
+        if (baseChild.textContent === "=") mrelEqCount++;
+        if (baseChild.textContent === "⇒") mrelRightArrowCount++;
+      });
+    });
+
+    if (baseClassCount > 2 && (mrelEqCount > 1 || mrelRightArrowCount > 1)) {
+      katex_html.classList.add("horizontal");
+      leftmostLastBaseIndex = 0;
+      rightmostFirstBaseIndex = 0;
+      leftmost = true;
+
+      // confirm if each base is leftmost element or rightmost element (span.base)
+      bases.forEach((base, base_index) => {
+        const base_children = Array.from(base.children);
+
+        base_children.forEach((baseChild, baseChildIndex) => {
+          // equation
+          if (mrelRightArrowCount === 0) {
+            katex_html.classList.add("equation");
+            if (leftmost) {
+              if (baseChild.textContent === "=") {
+                leftmost = false;
+                leftmostLastBaseIndex = base_index;
+              }
+            } else if (baseChild.textContent === "=") {
+              rightmost = false;
+              rightmostFirstBaseIndex = base_index;
+            } else {
+              rightmost = true;
+            }
+          }
+          // logical
+          else if (mrelRightArrowCount > 0) {
+            katex_html.classList.add("logical");
+          }
+        });
+      });
+      // add leftmost/rightmost class
+      if (rightmostFirstBaseIndex !== 0) {
+        bases.forEach((base, base_index) => {
+          if (base_index < leftmostLastBaseIndex) {
+            base.classList.add("leftmost");
+          } else if (base_index == leftmostLastBaseIndex) {
+            base.classList.add("leftmost", "phrase_end");
+          } else if (base_index > leftmostLastBaseIndex && base_index <= rightmostFirstBaseIndex) {
+            const base_children = Array.from(base.children);
+            base_children.forEach((base_child, base_child_index) => {
+              if (base_child.textContent === "=") {
+                base.classList.add("phrase_end");
+              }
+            });
+          } else if (rightmostFirstBaseIndex < base_index) {
+            base.classList.add("rightmost");
+          }
+        });
+      }
+    }
+  });
+};
+
+const addClassVertical = async () => {
+  // check if there are multiple col-align-r/col-align-l class
+  katexHTMLClass.forEach((katexHTML, katexHTMLIndex) => {
+    const mtableClass = Array.from(katexHTML.getElementsByClassName("mtable"));
+
+    // check matrix
+    mtableClass.forEach((mtable, mtableIndex) => {});
+
+    if (katexHTML.getElementsByClassName("mtable")[0] === undefined) {
+      // not multi-line
+    } else {
+      const mtableClass = Array.from(katexHTML.getElementsByClassName("mtable"));
+      // katexHTML has multi-lines
+      let multiLine = false;
+      let existColAlignR = false;
+      let existColAlignL = false;
+
+      mtableClass.forEach((mtable, mtableIndex) => {
+        if (mtable.classList.contains("matrix-mtable")) {
+        } else if (!mtable.classList.contains("matrix-mtable") && mtableIndex === 0) {
+          const mtableChildren = Array.from(mtable.children);
+          mtableChildren.forEach(mtableChild => {
+            if (mtableChild.className === "col-align-r") existColAlignR = true;
+            if (mtableChild.className === "col-align-l") existColAlignL = true;
+          });
+          if (existColAlignR === true && existColAlignL === true) multiLine = true;
+          if (multiLine) {
+            katexHTML.classList.add("multi-line");
+            const colAlignRList = [];
+            const colAlignLList = [];
+            const leftmostColTops = [];
+            mtableChildren.forEach(mtableChild => {
+              if (mtableChild.className === "col-align-r") {
+                colAlignRList.push(mtableChild);
+              } else if (mtableChild.className === "col-align-l") {
+                colAlignLList.push(mtableChild);
+              } else {
+              }
+            });
+            let leftRowIndex = 0;
+            let rightRowIndex = 0;
+            // console.log(colAlignRList.length, colAlignLList.length)
+            if (colAlignRList.length === 3 && colAlignLList.length === 2) {
+              if (colAlignRList.length > 1 && colAlignLList.length > 1) {
+                colAlignRList.forEach((colAlignR, i) => {
+                  leftRowIndex = 0;
+                  const cols = Array.from(colAlignR.getElementsByClassName("mord"));
+                  if (i === 0) {
+                    cols.forEach((e, i) => {
+                      if (e.textContent.length > 0 && e.className === "mord" && e.clientHeight > 1 && e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")) {
+                        leftmostColTops.push(e.parentElement.style.top);
+                        e.classList.add(`formula-${katexHTMLIndex}`, `row-${leftRowIndex}`, `left`);
+                        leftRowIndex++;
+                      }
+                    });
+                  } else {
+                    cols.forEach((e, i) => {
+                      if (e.textContent.length > 0 && e.className === "mord" && e.clientHeight > 1 && e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")) {
+                        e.classList.add(`formula-${katexHTMLIndex}`, `row-${leftmostColTops.indexOf(e.parentElement.style.top)}`, `right`);
+                        leftRowIndex++;
+                      }
+                    });
+                  }
+                });
+
+                colAlignLList.forEach((colAlignL, i) => {
+                  rightRowIndex = 0;
+                  const cols = Array.from(colAlignL.getElementsByClassName("mord"));
+                  cols.forEach((e, i) => {
+                    if (e.textContent.length > 0 && e.className === "mord" && e.clientHeight > 1 && e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")) {
+                      // console.log(leftmostColTops, e.parentElement.style.top, leftmostColTops.indexOf(e.parentElement.style.top))
+                      // e.classList.add(`formula-${katexHTMLIndex}`, `row-${rightRowIndex}`, `right`)
+                      e.classList.add(`formula-${katexHTMLIndex}`, `row-${leftmostColTops.indexOf(e.parentElement.style.top)}`, `right`);
+
+                      rightRowIndex++;
+                    }
+                  });
+                });
+              }
+              katexHTML.classList.add("mcsymmetric");
+            } else {
+              // Add classes to left lines
+              if (colAlignRList.length > 1) {
+                colAlignRList.forEach((colAlignR, i) => {
+                  if (i === 0) {
+                    leftRowIndex = 1;
+                  } else {
+                    leftRowIndex = 0;
+                  }
+                  const cols = Array.from(colAlignR.getElementsByClassName("mord"));
+                  try {
+                    cols.forEach((e, i) => {
+                      if (e.textContent.length > 0 && e.className === "mord" && e.clientHeight > 1 && e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")) {
+                        e.classList.add(`formula-${katexHTMLIndex}`, `row-${leftRowIndex}`, `left`);
+                        leftRowIndex++;
+                      }
+                    });
+                  } catch (e) {
+                    console.error(e);
+                  }
+                });
+              } else {
+                colAlignRList.forEach((colAlignR, i) => {
+                  const cols = Array.from(colAlignR.getElementsByClassName("mord"));
+                  cols.forEach((e, i) => {
+                    if (e.textContent.length > 0 && e.className === "mord" && e.clientHeight > 1 && e.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")) {
+                      e.classList.add(`formula-${katexHTMLIndex}`, `row-${leftRowIndex}`, `left`);
+                      leftRowIndex++;
+                    }
+                  });
+                });
+              }
+
+              // Add classes to right lines
+              if (colAlignLList.length >= 1) {
+                colAlignLList.forEach((colAlignL, i) => {
+                  // if (i === 0) {
+                  //   rightRowIndex = 1
+                  // } else {
+                  //   rightRowIndex = 0
+                  // }
+                  const cols = Array.from(colAlignL.getElementsByClassName("mord"));
+                  try {
+                    cols.forEach((row, ri) => {
+                      if (row.textContent !== "⋮" && row.textContent.length > 0 && row.className === "mord" && row.clientHeight > 1 && row.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col")) {
+                        row.classList.add(`formula-${katexHTMLIndex}`, `row-${rightRowIndex}`, `right`);
+                        rightRowIndex++;
+                      } else if (row.textContent === "⋮") {
+                        row.classList.add("dots");
+                        // row.classList.add(`formula-${katexHTMLIndex}`, `row-${rightRowIndex}`, `right`)
+                      }
+                    });
+                  } catch (e) {
+                    console.error(e);
+                  }
+                });
+              } else {
+                colAlignLList.forEach(colAlignL => {
+                  const cols = Array.from(colAlignL.getElementsByClassName("mord"));
+                  cols.forEach((row, ri) => {
+                    if (
+                      row.textContent.length > 0 &&
+                      row.className === "mord" &&
+                      row.clientHeight > 1 &&
+                      row.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("col") &&
+                      row.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes("base") &&
+                      !row.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains("matrix-mtable")
+                    ) {
+                      console.log(row);
+                      row.classList.add(`formula-${katexHTMLIndex}`, `row-${rightRowIndex}`, `right`);
+                      rightRowIndex++;
+                    }
+                  });
+                });
+              }
+              // eslint-disable-next-line no-console
+
+              if (leftRowIndex === rightRowIndex) {
+                katexHTML.classList.add("symmetric");
+              } else if (leftRowIndex === 0 && rightRowIndex > 0) {
+                katexHTML.classList.add("straight");
+              } else {
+                katexHTML.classList.add("asymmetric");
+              }
+            }
+          }
+        }
+      });
+    }
+  });
+};
+
+const addStyleOverFlowXAuto = () => {
+  const ofx = document.getElementsByClassName("overflow-x");
+  Array.from(ofx).forEach(o => {
+    o.style.overflowX = "auto";
+    o.style.overflowY = "visible";
+    o.style.position = "contents";
+  });
+};
+
+function allCollapse() {
+  const toggleButton = Array.from(document.getElementsByClassName("katex-extension-button"));
+
+  toggleButton.forEach((el, index) => {
+    try {
+      if (el.classList.contains("collapse-btn") === true) {
+        el.click();
+      }
+    } catch (error) {}
+  });
+}
+
+function allExpand() {
+  const toggleButton = Array.from(document.getElementsByClassName("katex-extension-button"));
+
+  toggleButton.forEach((el, index) => {
+    try {
+      if (el.classList.contains("expand-btn") === true) {
+        el.click();
+      }
+    } catch (error) {}
+  });
+}
+
+const saveKatexStatus = (index, val) => {
+  const localStorage_obj = JSON.parse(localStorage["katex-status"]);
+  localStorage_obj[window.location.href][index] = val;
+  const setjson = JSON.stringify(localStorage_obj);
+  localStorage.setItem("katex-status", setjson);
+};
+
+const getKatexOverFlowX = () => {
+  const index_list = [];
+  const katex_html_collection = document.getElementsByClassName("katex-html");
+  const katex_html = Array.from(katex_html_collection);
+
+  const base_width = [];
+  const base_height = [];
+
+  katex_html.forEach((katex, katex_html_index) => {
+    const katex_children = Array.from(katex.children);
+    let width = 0;
+    // console.log('num, client, offset, scroll')
+    katex_children.forEach((base, index) => {
+      // console.log(index, base.clientWidth, base.offsetWidth, base.scrollWidth)
+      width += base.offsetWidth;
+    });
+    if (width > window_width_adjusted) {
+      katex_html[katex_html_index].classList.add("overflow-x");
+      index_list.push(katex_html_index);
+    }
+  });
+  return index_list;
+};
+
+const getPhraseEndList = list => {
+  const phrase_end_list = [];
+  list.forEach((el, el_index) => {
+    if (el.classList.contains("phrase_end")) phrase_end_list.push(el_index);
+  });
+  return phrase_end_list;
+};
+
+const getLeftmostList = list => {
+  const leftmost_list = [];
+  list.forEach((el, el_index) => {
+    if (el.classList.contains("leftmost")) leftmost_list.push(el_index);
+  });
+  return leftmost_list;
+};
+
+async function reshape(overFlowList) {
+  await overFlowList.forEach(index => {
+    // console.log(katex_list[index])
+    const children = Array.from(katex_list[index].children);
+    const window_width = window.innerWidth;
+
+    let katex_width = 0;
+    const chapter = [];
+    console.log("window.width = ", window.innerWidth, "katex-html-width = ", katex_list[index].clientWidth);
+    if (children.length > 1) {
+      console.log(children);
+      // horizontal type
+      children.forEach((child, child_index) => {
+        katex_width += child.clientWidth;
+        console.log("width: ", child.clientWidth, " sum: ", katex_width);
+        if (katex_list[index].clientWidth - 50 < katex_width) {
+          katex_width = child.clientWidth;
+          chapter.push(child_index);
+        }
+      });
+      console.log("chapter:", chapter);
+      let outerHTML = "";
+      const outerHTMLList = [];
+      chapter.forEach((sep, chapter_index) => {
+        outerHTML = "";
+        if (chapter_index < chapter.length - 1) {
+          for (let i = sep; i < chapter[chapter_index + 1]; i++) {
+            outerHTML += children[i].outerHTML;
+          }
+          outerHTMLList.push("<p>" + outerHTML + "</p>");
+        } else {
+          for (let i = sep; i < children.length; i++) {
+            outerHTML += children[i].outerHTML;
+          }
+          outerHTMLList.push("<p>" + outerHTML + "</p>");
+        }
+      });
+      for (let i = chapter[0] + 1; i < children.length; i++) {
+        children[i].remove();
+      }
+
+      const str = outerHTMLList.join("");
+
+      children[chapter[0]].outerHTML = str;
+    } else if (children.length === 1) {
+      // vertical type
+    }
+  });
+}
+
+async function reshape2(overFlowList, enable = true) {
+  await overFlowList.forEach(index => {
+    const katex_children = Array.from(katex_list[index].children);
+    const window_width = window.innerWidth;
+
+    let katex_width = 0;
+    const chapters = [];
+    const child_widths = [];
+    const child_heights = [];
+
+    console.log("window.width = ", window.innerWidth, "katex-html-width = ", katex_list[index].scrollWidth);
+    const phrase_end_list = getPhraseEndList(katex_children);
+    const leftmost_list = getLeftmostList(katex_children);
+    const leftmost_end_element = katex_list[index].children[leftmost_list.slice(-1)[0]];
+    // leftmost_end_element.children[leftmost_end_element.children.length - 2].remove()
+    // console.log(katex_list[index].children[leftmost_list.slice(-1)[0] + 1].before(document.createElement('br')))
+    phrase_end_list.forEach(phrase_end => {
+      // 等号追加
+      katex_children[phrase_end + 1].children[0].outerHTML = katex_children[phrase_end + 1].children[0].outerHTML + '<span class="mrel">=</span>';
+      // 等号削除
+      Array.from(katex_children[phrase_end].children).slice(-2)[0].remove();
+    });
+    if (katex_children.length > 1) {
+      // horizontal type
+      katex_children.forEach((child, child_index) => {
+        child_widths.push(child.offsetWidth);
+        child_heights.push(child.offsetHeight);
+        katex_width += child.clientWidth;
+        // ディスプレイをはみ出した
+        if (window_width_adjusted <= katex_width) {
+          katex_width = child.clientWidth;
+          chapters.push(child_index);
+        }
+      });
+      console.log(katex_children);
+      chapters.forEach((chapter, c_index) => {
+        console.log("chapter: ", chapter);
+        if (chapter != chapters.slice(-1)[0]) {
+          console.log("chapterの最後の要素ではない");
+          for (let i = chapter; i < chapters[c_index + 1]; i++) {
+            console.log("i=", i);
+            // 自分がchapter かつ phrase_endかつ、一つ前がphrase_endの場合は改行
+            if (i == chapter && katex_children[i].classList.contains("phrase_end") && katex_children[i - 1].classList.contains("phrase_end")) {
+              console.log("@@@if@@@");
+              const br = document.createElement("br");
+              br.className = `${i}`;
+              katex_children[i].before(br);
+            } else if (i == chapter && katex_children[i].classList.contains("phrase_end") && !katex_children[i - 1].classList.contains("phrase_end")) {
+              console.log("@@@elif1@@@");
+              const br = document.createElement("br");
+              br.className = `${i}`;
+              katex_children[phrase_end_list[phrase_end_list.indexOf(i) - 1]].after(br);
+            }
+            // 自分がchapterでphrase_endでない時
+            else if (i == chapter && !katex_children[i].classList.contains("phrase_end")) {
+              console.log("@@@elif2@@@:chapter", chapter);
+              let tmp;
+              console.log(getPhraseEndList(katex_children));
+              getPhraseEndList(katex_children).forEach(phrase_end => {
+                console.log(i, phrase_end);
+                if (phrase_end < i) tmp = phrase_end;
+              });
+              console.log("tmp", tmp);
+              const br = document.createElement("br");
+              br.className = `${i}`;
+              console.log([tmp, katex_children]);
+              // console.table(katex_children)
+              katex_children[tmp + 1].before(br);
+            } else {
+              console.log("@@@else@@@");
+              const br = document.createElement("br");
+              br.className = `${i}`;
+            }
+          }
+        } else {
+          console.log("chapterの最後の要素");
+          for (let i = chapter; i < katex_children.length; i++) {
+            console.log("i=", i);
+            if (i == chapter && katex_children[i].classList.contains("phrase_end")) {
+              console.log("+++if+++");
+              const br = document.createElement("br");
+              br.className = `${i}`;
+              katex_children[phrase_end_list[phrase_end_list.indexOf(i) - 1]].after(br);
+              // const br = document.createElement('br')
+              // br.className = `${i}`
+              // katex_children[i].after(br)
+            } else if (i == chapter) {
+              console.log("+++elif+++");
+              let tmp;
+              getPhraseEndList(katex_children).forEach(phrase_end => {
+                if (phrase_end < i) tmp = phrase_end;
+              });
+              console.log("tmp", tmp);
+              const br = document.createElement("br");
+              br.className = `${i}`;
+              katex_children[tmp + 1].before(br);
+            }
+          }
+        }
+      });
+
+      console.log("chapters: ", chapters);
+      console.log("phrase_end: ", getPhraseEndList(katex_children));
+      // console.log('cw:', child_widths, '\nch:', child_heights)
+      // console.log('cw,sum: ', sum(child_widths, child_widths.length))
+      const outerHTMLList = [];
+    } else if (katex_children.length === 1) {
+      // vertical type
+    }
+  });
+}
+
+function sumFront(array, index) {
+  let sum = 0;
+  for (let i = 0; i < index; i++) {
+    sum += array[i];
+  }
+}
+
+function sumPart(array, start, last) {
+  let sum = 0;
+  for (let i = start; i < last; i++) {
+    sum += array[i];
+  }
+}
+
+function collapseAsymmetric(n) {
+  const formula = document.querySelectorAll(`[class~="formula-${n}"`);
+  let numLeftLine = 0;
+  let numRightLine = 0;
+  const leftHeight = [];
+  const rightHeight = [];
+  const colLeft = [];
+  const colRight = [];
+  let firstElement = null;
+  let secondElement = null;
+  let lastElement = null;
+
+  if (katex_list[n].classList.contains("collapsed")) {
+  } else {
+    formula.forEach((row, i) => {
+      if (row.classList.contains("left")) {
+        numLeftLine++;
+        leftHeight.push(row.clientHeight);
+        colLeft.push(row);
+      } else {
+        numRightLine++;
+        rightHeight.push(row.clientHeight);
+        colRight.push(row);
+      }
+      numLeftLine = 0;
+      numRightLine = 0;
+    });
+
+    colLeft.forEach((row, index) => {
+      if (index == 0) {
+        firstElement = row;
+      }
+      if (index < colLeft.length - 1) {
+        row.classList.add("gradation");
+      }
+    });
+
+    // colRight.forEach((row, index) => {
+    //   if (index < 3) {
+    //     row.classList.add('gradation')
+    //     row.style.display = 'none'
+    //     row.previousElementSibling.style.display = 'none'
+    //   }
+    // })
+    colRight.forEach((row, index) => {
+      if (index < colRight.length - 1) {
+        row.classList.add("gradation");
+        row.style.display = "none";
+        row.previousElementSibling.style.display = "none";
+      } else {
+        lastElement = row;
+      }
+    });
+
+    secondElement = colRight[1];
+
+    if (firstElement != null && lastElement != null) {
+      const lastElementStyleTop = lastElement.parentElement.style.top;
+      // console.log(secondElement)
+      const secondElementStyleTop = secondElement.parentElement.style.top;
+      lastElement.parentElement.style.top = firstElement.parentElement.style.top;
+      // lastElement.parentElement.style.top = secondElementStyleTop
+      // firstElement.parentElement.style.top = secondElementStyleTop
+
+      const h = Math.max(firstElement.clientHeight, lastElement.clientHeight);
+      katex_list[n].style.height = `${h}px`;
+      katex_list[n].classList.add("collapsed", `${lastElementStyleTop}`);
+      katex_list[n].classList.remove("expanded");
+    }
+  }
+}
+
+function collapseHorizontal(n) {
+  let leftmostLastBaseIndex = 0;
+  let rightmostFirstBaseIndex = 0;
+  let tmp = 0;
+
+  const katex_children = Array.from(katex_list[n].children);
+  katex_children.forEach((katex_child, index) => {
+    if (katex_child.classList.contains("leftmost")) {
+      leftmostLastBaseIndex = index;
+    } else if (katex_child.classList.contains("rightmost")) {
+      rightmostFirstBaseIndex = index;
+      tmp++;
+    }
+  });
+  rightmostFirstBaseIndex = rightmostFirstBaseIndex - tmp + 1;
+  // console.log(leftmostLastBaseIndex, rightmostFirstBaseIndex)
+  katex_children.forEach((katex_child, index) => {
+    if (leftmostLastBaseIndex < index && index < rightmostFirstBaseIndex) {
+      katex_child.style.display = "none";
+      katex_child.classList.add("gradation");
+    }
+  });
+  katex_list[n].classList.remove("expanded");
+  katex_list[n].classList.add("collapsed");
+}
+
+function collapseHorizontalOnMounted(n) {
+  let leftmostLastBaseIndex = 0;
+  let rightmostFirstBaseIndex = 0;
+  let tmp = 0;
+
+  const katex_children = Array.from(katex_list[n].children);
+
+  katex_children.forEach((katex_child, index) => {
+    if (katex_child.classList.contains("leftmost")) {
+      leftmostLastBaseIndex = index;
+    } else if (katex_child.classList.contains("rightmost")) {
+      rightmostFirstBaseIndex = index;
+      tmp++;
+    }
+  });
+  rightmostFirstBaseIndex = rightmostFirstBaseIndex - tmp + 1;
+  katex_children.forEach((katex_child, index) => {
+    if (leftmostLastBaseIndex < index && index < rightmostFirstBaseIndex) {
+      katex_child.style.display = "none";
+      katex_child.classList.add("gradation");
+    }
+  });
+  katex_list[n].classList.add("collapsed");
+}
+
+function collapseMultiColumnsSymmetric(n) {
+  const formula = document.querySelectorAll(`[class~="formula-${n}"`);
+  const leftmostCol = Array.from(katex_list[n].getElementsByClassName("left"));
+  const leftmostColTops = [];
+  const line = leftmostCol.length; // 行数
+  // 各行のtopを保持
+  leftmostCol.forEach((phrase, index) => {
+    leftmostColTops.push(phrase.parentElement.style.top);
+  });
+  katex_list[n].classList.add(`${leftmostColTops.slice(-1)[0]}`);
+
+  // 中間行の隠蔽
+  formula.forEach((phrase, index) => {
+    const rowIndex = phrase.className.match(/row-(\d)/)[1];
+    if (rowIndex > 0 && rowIndex < line - 1) {
+      // phrase.style.border = '1px dashed green'
+      phrase.style.display = "none";
+      phrase.classList.add("gradation");
+    }
+    // 最終行のtop値 を 2行目のtop値 に置換
+    else if (rowIndex == line - 1) {
+      phrase.parentElement.style.top = leftmostColTops[1];
+    }
+  });
+  katex_list[n].classList.add("collapsed"); // , `${lastRowElementStyleTop}`)
+  katex_list[n].classList.remove("expanded");
+}
+
+function expandMultiColumnsSymmetric(n) {
+  const formula = document.querySelectorAll(`[class~="formula-${n}"`);
+  const leftmostCol = Array.from(katex_list[n].getElementsByClassName("left"));
+  const leftmostColTops = [];
+  const line = leftmostCol.length; // 行数
+  let lastRowTop = 0;
+  // 各行のtopを保持
+  leftmostCol.forEach((phrase, index) => {
+    leftmostColTops.push(phrase.parentElement.style.top);
+  });
+
+  // 中間行の表示
+  formula.forEach((phrase, index) => {
+    const rowIndex = phrase.className.match(/row-(\d)/)[1];
+    if (rowIndex > 0 && rowIndex < line - 1) {
+      // phrase.style.border = '1px dashed green'
+      phrase.style.display = "";
+    }
+    // 最終行のtop値 を 2行目のtop値 に置換
+    else if (rowIndex == line - 1) {
+      // phrase.parentElement.style.top = leftmostColTops[1]
+      // const katexHTMLClassList = Array.from(katexHTMLList[n].classList)
+      // katexHTMLClassList.forEach((className, classNameIndex) => {
+      Array.from(katex_list[n].classList).forEach((c, i) => {
+        if (c.match(/\w+em/g)) {
+          lastRowTop = c;
+        }
+      });
+      phrase.parentElement.style.top = lastRowTop;
+      //   if (className.match(/\w+em/g)) {
+      //     console.log(className)
+      //     lastElementStyleTop = katexHTMLList[n].classList[classNameIndex]
+      //   }
+      // })
+    }
+  });
+  katex_list[n].classList.add("expanded"); // , `${lastRowElementStyleTop}`)
+  katex_list[n].classList.remove("collapsed");
+}
+
+function collapseStraight(n) {
+  const katexHTMLList = document.getElementsByClassName("katex-html");
+  const formula = document.querySelectorAll(`[class~="formula-${n}"`);
+
+  // console.log(katexHTMLList)
+  // katexHTMLList[n].style.height = '79px'
+  // katexHTMLList[n].style.height = '79px'
+  // console.log(formula)
+  formula.forEach((row, index) => {
+    // console.log(row.clientHeight)
+    if (index > 0 && index < formula.length - 1) {
+      row.style.display = "none";
+    }
+  });
+}
+
+function collapseSymmetric(n) {
+  const dots = Array.from(document.getElementsByClassName("dots"));
+  dots.forEach((dot, doti) => {
+    dot.classList.add("gradation");
+    dot.style.display = "none";
+  });
+  const formula = document.querySelectorAll(`[class~="formula-${n}"`);
+  const leftHeight = [];
+  const rightHeight = [];
+  const colLeftList = [];
+  const colRightList = [];
+  const firstRowElementsInColLeft = [];
+  const lastRowElementsInColLeft = [];
+  const firstRowElementsInColRight = [];
+  const lastRowElementsInColRight = [];
+  let numColRight = 0;
+
+  formula.forEach((row, index) => {
+    if (row.classList.contains("left")) {
+      leftHeight.push(row.clientHeight);
+      colLeftList.push(row);
+    } else {
+      numColRight++;
+      rightHeight.push(row.clientHeight);
+      colRightList.push(row);
+    }
+  });
+  const colLeftListList = [];
+
+  if (colLeftList.length != colRightList.length) {
+    colLeftListList.push(colLeftList.slice(0, numColRight - 1), colLeftList.slice(numColRight - 1));
+  } else {
+    colLeftListList.push(colLeftList);
+  }
+
+  // console.log(n, 'colLeftList:', colLeftList, 'colRightList:', colRightList)
+  colLeftListList.forEach((colLeftList, colLeftListIndex) => {
+    colLeftList.forEach((row, index) => {
+      if (index == colLeftList.length - 1) {
+        lastRowElementsInColLeft.push(row);
+      }
+      if (colLeftListIndex == colLeftListList.length - 1) {
+        if (index == 0) firstRowElementsInColLeft.push(row);
+      }
+      const rowIndex = row.className.match(/row-(\d)/)[1];
+      if (rowIndex != 0 && rowIndex != numColRight - 1) {
+        row.style.display = "none";
+        row.previousElementSibling.style.display = "none";
+        row.classList.add("gradation");
+      }
+    });
+  });
+
+  colRightList.forEach((r, i) => {
+    // console.log(r)
+  });
+  colRightList.forEach((row, index) => {
+    if (index == 0) {
+      firstRowElementsInColRight.push(row);
+    } else if (index > 0 && index < colRightList.length - 1) {
+      row.style.display = "none";
+      row.previousElementSibling.style.display = "none";
+    } else {
+      lastRowElementsInColRight.push(row);
+    }
+  });
+
+  let lastRowElementStyleTop = 0;
+  let secondElementStyleTop = 0;
+
+  try {
+    if (lastRowElementsInColRight.length != 0) {
+      lastRowElementStyleTop = lastRowElementsInColRight[0].parentElement.style.top;
+      secondElementStyleTop = firstRowElementsInColLeft[0].parentElement.nextElementSibling.style.top;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+
+  lastRowElementsInColLeft.forEach(row => {
+    row.parentElement.style.top = secondElementStyleTop;
+  });
+
+  lastRowElementsInColRight.forEach(row => {
+    row.parentElement.style.top = secondElementStyleTop;
+  });
+
+  let firstRowHeight = 0;
+  let lastRowHeight = 0;
+
+  firstRowElementsInColLeft.forEach((e, i) => {
+    if (i == 0) firstRowHeight = e.clientHeight;
+    else firstRowHeight = Math.max(firstRowHeight, e.clientHeight);
+  });
+
+  firstRowElementsInColRight.forEach((e, i) => {
+    if (i == 0) firstRowHeight = Math.max(firstRowHeight, e.clientHeight);
+    else firstRowHeight = Math.max(firstRowHeight, e.clientHeight);
+  });
+
+  lastRowElementsInColLeft.forEach((e, i) => {
+    if (i == 0) lastRowHeight = e.clientHeight;
+    else lastRowHeight = Math.max(lastRowHeight, e.clientHeight);
+  });
+
+  lastRowElementsInColRight.forEach((e, i) => {
+    if (i == 0) lastRowHeight = Math.max(lastRowHeight, e.clientHeight);
+    else lastRowHeight = Math.max(lastRowHeight, e.clientHeight);
+  });
+
+  katex_list[n].style.height = `${firstRowHeight + lastRowHeight}px`;
+  katex_list[n].classList.add("collapsed", `${lastRowElementStyleTop}`);
+  katex_list[n].classList.remove("expanded");
+}
+
+function collapseSymmetricOnMounted(n) {
+  const katexHTMLList = document.getElementsByClassName("katex-html");
+  const formula = document.querySelectorAll(`[class~="formula-${n}"`);
+  const leftHeight = [];
+  const rightHeight = [];
+  const colLeftList = [];
+  const colRightList = [];
+  const firstRowElementsInColLeft = [];
+  const lastRowElementsInColLeft = [];
+  const firstRowElementsInColRight = [];
+  const lastRowElementsInColRight = [];
+  let numColRight = 0;
+
+  formula.forEach((row, index) => {
+    if (row.classList.contains("left")) {
+      leftHeight.push(row.clientHeight);
+      colLeftList.push(row);
+    } else {
+      numColRight++;
+      rightHeight.push(row.clientHeight);
+      colRightList.push(row);
+    }
+  });
+  const colLeftListList = [];
+
+  if (colLeftList.length != colRightList.length) {
+    colLeftListList.push(colLeftList.slice(0, numColRight - 1), colLeftList.slice(numColRight - 1));
+  } else {
+    colLeftListList.push(colLeftList);
+  }
+
+  // console.log(n, 'colLeftList:', colLeftList, 'colRightList:', colRightList)
+  colLeftListList.forEach((colLeftList, colLeftListIndex) => {
+    colLeftList.forEach((row, index) => {
+      if (index == colLeftList.length - 1) {
+        lastRowElementsInColLeft.push(row);
+      }
+      if (colLeftListIndex == colLeftListList.length - 1) {
+        if (index == 0) firstRowElementsInColLeft.push(row);
+      }
+      const rowIndex = row.className.match(/row-(\d)/)[1];
+      if (rowIndex != 0 && rowIndex != numColRight - 1) {
+        row.style.display = "none";
+        row.previousElementSibling.style.display = "none";
+        row.classList.add("gradation");
+      }
+    });
+  });
+
+  colRightList.forEach((row, index) => {
+    if (index == 0) {
+      firstRowElementsInColRight.push(row);
+    } else if (index > 0 && index < colRightList.length - 1) {
+      row.style.display = "none";
+      row.previousElementSibling.style.display = "none";
+      row.classList.add("gradation");
+    } else {
+      lastRowElementsInColRight.push(row);
+    }
+  });
+
+  let lastRowElementStyleTop = 0;
+  let secondElementStyleTop = 0;
+  if (lastRowElementsInColRight.length != 0) {
+    lastRowElementStyleTop = lastRowElementsInColRight[0].parentElement.style.top;
+    secondElementStyleTop = firstRowElementsInColLeft[0].parentElement.nextElementSibling.style.top;
+  }
+
+  lastRowElementsInColLeft.forEach(row => {
+    row.parentElement.style.top = secondElementStyleTop;
+  });
+
+  lastRowElementsInColRight.forEach(row => {
+    row.parentElement.style.top = secondElementStyleTop;
+  });
+
+  let firstRowHeight = 0;
+  let lastRowHeight = 0;
+
+  firstRowElementsInColLeft.forEach((e, i) => {
+    if (i == 0) firstRowHeight = e.clientHeight;
+    else firstRowHeight = Math.max(firstRowHeight, e.clientHeight);
+  });
+
+  firstRowElementsInColRight.forEach((e, i) => {
+    if (i == 0) firstRowHeight = Math.max(firstRowHeight, e.clientHeight);
+    else firstRowHeight = Math.max(firstRowHeight, e.clientHeight);
+  });
+
+  lastRowElementsInColLeft.forEach((e, i) => {
+    if (i == 0) lastRowHeight = e.clientHeight;
+    else lastRowHeight = Math.max(lastRowHeight, e.clientHeight);
+  });
+
+  lastRowElementsInColRight.forEach((e, i) => {
+    if (i == 0) lastRowHeight = Math.max(lastRowHeight, e.clientHeight);
+    else lastRowHeight = Math.max(lastRowHeight, e.clientHeight);
+  });
+
+  katexHTMLList[n].style.height = `${firstRowHeight + lastRowHeight}px`;
+  katexHTMLList[n].classList.add("collapsed", `${lastRowElementStyleTop}`);
+  katexHTMLList[n].classList.remove("expanded");
+}
+
+function createToggle(index, checked, collapsed) {
+  const status = ["expand-btn", "collapse-btn"];
+
+  const toggle = document.createElement("div");
+  toggle.classList.add("switch", "katex-toolbar", `kib-${index}`, "py-1");
+
+  function innerHTML(type, checked, collapsed) {
+    let _checked = "checked";
+    let _collapsed = "expand-btn";
+    if (!checked) _checked = "";
+    if (!collapsed) _collapsed = "collapse-btn";
+    const html = `<label class="switch__label">
+      <input type="checkbox" ${_checked} class="switch__input katex-extension-button ${type} ${_collapsed}"/>
+      <span class="switch__content"></span><span class="switch__circle"></span></label>`;
+    return html;
+  }
+  let type = "";
+  if (katex_list[index].classList.contains("symmetric")) type = "symmetric";
+  else if (katex_list[index].classList.contains("asymmetric")) type = "asymmetric";
+  else if (katex_list[index].classList.contains("horizontal")) type = "horizontal";
+  else if (katex_list[index].classList.contains("horizontal-combined")) type = "horizontal-combined";
+  else if (katex_list[index].classList.contains("mcsymmetric")) type = "mcsymmetric";
+  else type = "none";
+
+  toggle.innerHTML = innerHTML(type, checked, collapsed);
+  if (katex[index].parentElement.classList.contains("katex-display")) {
+    // display
+    katex[index].parentElement.parentElement.after(toggle);
+  } else {
+    // inline
+    toggle.style.display = "inline";
+    toggle.style.position = "relative";
+    katex[index].after(toggle);
+  }
+}
+
+function expandAsymmetric(n) {
+  // console.log(`expandAsymmetric(${n})`)
+  const katexHTML = document.getElementsByClassName("katex-html");
+  const formula = document.querySelectorAll(`[class~="formula-${n}"`);
+  const colLeft = [];
+  const colRight = [];
+
+  if (katexHTML[n].classList.contains("expanded")) {
+  } else {
+    // not expanded
+    katexHTML[n].style.height = "";
+    katexHTML[n].classList.remove("collapsed");
+    katexHTML[n].classList.add("expanded");
+    let lastElementStyleTop = "";
+    const katexHTMLClassList = Array.from(katexHTML[n].classList);
+    const pattern = /\w+em/g;
+    katexHTMLClassList.forEach((className, classNameIndex) => {
+      if (className.match(pattern)) {
+        lastElementStyleTop = katexHTML[n].classList[classNameIndex];
+      }
+    });
+
+    if (formula.length > 0) {
+      // console.log('%cformula:', this.$store.state.console, formula)
+    }
+    formula.forEach((row, i) => {
+      row.style.display = "";
+      row.previousElementSibling.style.display = "";
+      if (i == formula.length - 1) {
+        row.parentElement.style.top = lastElementStyleTop;
+      }
+      if (row.classList.contains("left")) {
+        colLeft.push(row);
+      } else {
+        colRight.push(row);
+      }
+    });
+  }
+}
+
+function expandHorizontal(n) {
+  // 11/11 Thu. 修正済み
+  let leftmostLastBaseIndex = 0;
+  let rightmostFirstBaseIndex = 0;
+  let tmp = 0;
+  Array.from(katex_list[n].children).forEach((kc, kcIndex) => {
+    if (kc.classList.contains("leftmost")) {
+      leftmostLastBaseIndex = kcIndex;
+    } else if (kc.classList.contains("rightmost")) {
+      rightmostFirstBaseIndex = kcIndex;
+      tmp++;
+    }
+  });
+  rightmostFirstBaseIndex = rightmostFirstBaseIndex - tmp + 1;
+  Array.from(katex_list[n].children).forEach((el, index) => {
+    if (leftmostLastBaseIndex < index && index < rightmostFirstBaseIndex) {
+      el.style.display = "";
+    }
+  });
+
+  katex_list[n].classList.remove("collapsed");
+  katex_list[n].classList.add("expanded");
+}
+
+function expandSymmetric(n) {
+  const dots = Array.from(document.getElementsByClassName("dots"));
+  dots.forEach((dot, doti) => {
+    dot.style.display = "";
+  });
+  const katexHTMLList = document.getElementsByClassName("katex-html");
+  const formula = document.querySelectorAll(`[class~="formula-${n}"`);
+
+  if (katexHTMLList[n].classList.contains("expanded")) {
+  } else {
+    // not expanded
+    katexHTMLList[n].style.height = "";
+    katexHTMLList[n].classList.remove("collapsed");
+    katexHTMLList[n].classList.add("expanded");
+
+    let lastElementStyleTop = "";
+    const katexHTMLClassList = Array.from(katexHTMLList[n].classList);
+    katexHTMLClassList.forEach((className, classNameIndex) => {
+      if (className.match(/\w+em/g)) {
+        lastElementStyleTop = katexHTMLList[n].classList[classNameIndex];
+      }
+    });
+
+    const rowIndexList = [];
+
+    formula.forEach(row => {
+      rowIndexList.push(row.className.match(/row-(\d)/)[1]);
+    });
+    const rowIndex = Math.max(...rowIndexList);
+
+    formula.forEach((row, i) => {
+      row.style.display = "";
+      row.previousElementSibling.style.display = "";
+      if (row.className.match(/row-(\d)/)[1] == rowIndex) {
+        row.parentElement.style.top = lastElementStyleTop;
+      }
+    });
+  }
+}
+
+function fireStoreDocExists() {
+  // eslint-disable-next-line no-extra-boolean-cast
+  if (!!firebase.auth().currentUser) {
+    firebase
+      .firestore()
+      .collection(CollectionName)
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+      .then(doc => {
+        // return doc.exists
+        // console.log('fireStoreDocExists')
+      });
+  }
+}
+
+function fireStoreSaveDocField() {
+  // eslint-disable-next-line no-extra-boolean-cast
+  if (!!firebase.auth().currentUser) {
+    firebase
+      .firestore()
+      .collection(CollectionName)
+      .doc(firebase.auth().currentUser.uid)
+      .set({
+        displayName: firebase.auth().currentUser.displayName,
+        email: firebase.auth().currentUser.email,
+        uid: firebase.auth().currentUser.uid,
+      })
+      .then(() => {
+        // console.log('fsSaveDocField!')
+      });
+  }
+}
+
+function fireStoreSaveLog(katexIndex, action) {
+  const katexMathML = Array.from(document.getElementsByClassName("katex-mathml"));
+
+  firebase
+    .firestore()
+    .collection(CollectionName)
+    .doc(firebase.auth().currentUser.uid)
+    .collection("history")
+    // .doc(String(Date.now()))
+    .doc(getUniqueStr(811))
+    .set({
+      action,
+      locale: new Date().toLocaleString(),
+      href: window.location.href,
+      id: katexIndex,
+      tex: katexMathML[katexIndex].innerText,
+      timestamp: Date.now(),
+    })
+    .then(() => {
+      // console.log('Document successfully written!')
+    });
+}
+
+function fireStoreSaveLogAll(katexIndex, action) {
+  const katexMathML = Array.from(document.getElementsByClassName("katex-mathml"));
+  firebase
+    .firestore()
+    .collection(CollectionAll)
+    .doc(getUniqueStr(999))
+    .set({
+      displayName: firebase.auth().currentUser.displayName,
+      email: firebase.auth().currentUser.email,
+      uid: firebase.auth().currentUser.uid,
+      action,
+      locale: new Date().toLocaleString(),
+      href: window.location.href,
+      id: katexIndex,
+      tex: katexMathML[katexIndex].innerText,
+      timestamp: Date.now(),
+    })
+    .then(() => {
+      // console.log('fsSaveDocField!')
+    });
+}
+
+function getUniqueStr(myStrong) {
+  let strong = 1000;
+  if (myStrong) strong = myStrong;
+  return new Date().getTime().toString(16) + Math.floor(strong * Math.random()).toString(16);
+}
+
+async function setToggleDetail(element, index, type, stats) {
+  if (type == "symmetric") {
+    element.addEventListener("change", event => {
+      if (element.checked) {
+        event.target.classList.remove("collapse-btn");
+        event.target.classList.add("expand-btn");
+        event.target.classList.remove(`scbtn-${index}`);
+        event.target.classList.add(`sebtn-${index}`);
+        collapseSymmetric(index);
+        // fireStoreSaveLog(index, "collapse");
+        saveKatexStatus(index, 1);
+        // fireStoreSaveLogAll(index, "collapse");
+      } else {
+        event.target.classList.remove("expand-btn");
+        event.target.classList.add("collapse-btn");
+        event.target.classList.remove(`sebtn-${index}`);
+        event.target.classList.add(`scbtn-${index}`);
+        expandSymmetric(index);
+        // fireStoreSaveLog(index, "expand");
+        saveKatexStatus(index, 0);
+        // fireStoreSaveLogAll(index, "expand");
+      }
+    });
+  } else if (type == "asymmetric") {
+    element.addEventListener("change", event => {
+      if (element.checked) {
+        event.target.classList.remove("collapse-btn");
+        event.target.classList.add("expand-btn");
+        event.target.classList.remove(`acbtn-${index}`);
+        event.target.classList.add(`aebtn-${index}`);
+        collapseAsymmetric(index);
+        // fireStoreSaveLog(index, "collapse");
+        saveKatexStatus(index, 1);
+        // fireStoreSaveLogAll(index, "collapse");
+      } else {
+        event.target.classList.remove("expand-btn");
+        event.target.classList.add("collapse-btn");
+        event.target.classList.remove(`aebtn-${index}`);
+        event.target.classList.add(`acbtn-${index}`);
+        expandAsymmetric(index);
+        // fireStoreSaveLog(index, "expand");
+        saveKatexStatus(index, 0);
+        // fireStoreSaveLogAll(index, "expand");
+      }
+    });
+  } else if (type == "mcsymmetric") {
+    element.addEventListener("change", event => {
+      if (element.checked) {
+        event.target.classList.remove("collapse-btn");
+        event.target.classList.add("expand-btn");
+        event.target.classList.remove(`mcbtn-${index}`);
+        event.target.classList.add(`mebtn-${index}`);
+        collapseMultiColumnsSymmetric(index);
+        // fireStoreSaveLog(index, "collapse");
+        saveKatexStatus(index, 1);
+        // fireStoreSaveLogAll(index, "collapse");
+      } else {
+        event.target.classList.remove("expand-btn");
+        event.target.classList.add("collapse-btn");
+        event.target.classList.remove(`mebtn-${index}`);
+        event.target.classList.add(`mcbtn-${index}`);
+        expandMultiColumnsSymmetric(index);
+        // fireStoreSaveLog(index, "expand");
+        saveKatexStatus(index, 0);
+        // fireStoreSaveLogAll(index, "expand");
+      }
+    });
+  } else if (type == "horizontal") {
+    element.addEventListener("change", event => {
+      if (element.checked) {
+        event.target.classList.remove("collapse-btn");
+        event.target.classList.add("expand-btn");
+        event.target.classList.remove(`hcbtn-${index}`);
+        event.target.classList.add(`hebtn-${index}`);
+        collapseHorizontal(index);
+        // fireStoreSaveLog(index, "collapse");
+        saveKatexStatus(index, 1);
+        // fireStoreSaveLogAll(index, "collapse");
+      } else {
+        event.target.classList.remove("expand-btn");
+        event.target.classList.add("collapse-btn");
+        event.target.classList.remove(`hebtn-${index}`);
+        event.target.classList.add(`hcbtn-${index}`);
+        expandHorizontal(index);
+        // fireStoreSaveLog(index, "expand");
+        saveKatexStatus(index, 0);
+        // fireStoreSaveLogAll(index, "expand");
+      }
+    });
+  } else if (type == "horizontalcombined") {
+  } else {
+    // console.log('type not found')
+  }
+}
+
+async function katexCollapsible(collapse = true, reshape = true, katex_status) {
+  // fireStoreSaveDocField();
+
+  await getKatex();
+  await loadKaTeX();
+  await addOrdinalNumberClass();
+  await addClassHorizontal();
+  await addClassVertical();
+  await addStyle();
+
+  // const katex_status = [1, 0, 1, 1, 0, 1, 1]
+  const overFlowIndexList = getKatexOverFlowX();
+  // await reshape(overFlowIndexList)
+  addStyleOverFlowXAuto();
+  // context menu
+  if (collapse) {
+    // collapseOnMounted
+    katexHTMLClass.forEach((katex, index) => {
+      if (katexClass[index].parentElement.classList.contains("katex-display")) {
+        katexHTMLClass[index].classList.add("display");
+      } else {
+        katexHTMLClass[index].classList.add("inline");
+      }
+      //
+      if (katex.classList.contains("symmetric")) {
+        if (katex_status[index] == 1) {
+          collapseSymmetric(index);
+          createToggle(index, 1, true);
+        } else createToggle(index, 0, false);
+      } else if (katex.classList.contains("straight")) {
+        collapseStraight(index);
+      } else if (katex.classList.contains("asymmetric")) {
+        if (katex_status[index] == 1) {
+          collapseAsymmetric(index);
+          createToggle(index, 1, true);
+        } else createToggle(index, 0, false);
+      } else if (katex.classList.contains("mcsymmetric")) {
+        if (katex_status[index] == 1) {
+          collapseMultiColumnsSymmetric(index);
+          createToggle(index, 1, true);
+        } else createToggle(index, 0, false);
+      } else if (katex.classList.contains("horizontal")) {
+        if (katex_status[index] == 1) {
+          collapseHorizontal(index);
+          createToggle(index, 1, true);
+        } else createToggle(index, 0, false);
+      } else if (katex.classList.contains("horizontal-combined")) {
+        // collapseHorizontalCombinedOnMounted(index)
+      } else {
+        // type not found
+      }
+    });
+  }
+
+  // Connect collapse/expand buttons and methods
+  const katexExtensionButtons = Array.from(document.getElementsByClassName("katex-extension-button"));
+  let katexExtensionButtonType = null;
+  katexExtensionButtons.forEach((katexExtensionButton, katexExtensionButtonIndex) => {
+    katexExtensionButtonType = katexExtensionButton.classList[2];
+    setToggleDetail(katexExtensionButton, katexExtensionButton.parentElement.parentElement.classList[2].split("-")[1], katexExtensionButtonType);
+  });
+}
+
+export default (context, inject) => {
+  inject("katexCollapsible", katexCollapsible);
+  inject("add", addClassVertical);
+};
+
+export { katexCollapsible, allCollapse, allExpand, getUniqueStr, CollectionName, CollectionAll };
