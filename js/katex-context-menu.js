@@ -59,7 +59,7 @@ function createContextMenu(index) {
   li2.innerText = "MathMLをコピー";
   li3.innerText = "TeXをコピー";
   li4.innerText = "全ての数式を折りたたむ";
-  li5.innerText = `全ての数式を展開する ${index}`;
+  li5.innerText = `全ての数式を展開する`;
   li5.style.borderBottom = "2px solid black";
   li6.innerText = "[*]デフォルトの開閉状態";
   li7.innerText = "[*]インライン数式の開閉";
